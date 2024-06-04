@@ -30,18 +30,19 @@ jobs:
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        NEW_VERSION: ${{ steps.gitsemanticversion.outputs.version }}
       run: |
         echo "Inicio docker login"
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         echo "Fin docker login"
-        echo "$NEW_VERSION"
-        
-    # - name: "Docker build image"
-    #   run: |
-    #     docker build -t wechavez14/graphql-actions:0.0.2 .
-    #     docker build -t wechavez14/graphql-actions:latest .
-    # - name: "Docker push image"
-    #   run: |
-    #     docker push wechavez14/graphql-actions:0.0.2
-    #     docker push wechavez14/graphql-actions:latest
+    - name: "Docker build image"
+      env:
+        NEW_VERSION: ${{ steps.gitsemanticversion.outputs.version }}
+      run: |
+        docker build -t wechavez14/graphql-actions:$NEW_VERSION .
+        docker build -t wechavez14/graphql-actions:latest .
+    - name: "Docker push image"
+      env:
+        NEW_VERSION: ${{ steps.gitsemanticversion.outputs.version }}
+      run: |
+        docker push wechavez14/graphql-actions:$NEW_VERSION
+        docker push wechavez14/graphql-actions:latest
