@@ -28,6 +28,8 @@ jobs:
     - name: "Docker build image"
       run: |
         docker build -t wechavez14/graphql-actions:0.0.2 .
+        docker build -t wechavez14/graphql-actions:latest .
     - name: "Docker build image"
       run: |
         docker push wechavez14/graphql-actions:0.0.2
+        docker push wechavez14/graphql-actions:latest
