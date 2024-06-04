@@ -16,7 +16,7 @@ jobs:
     - name: "Checkout code"
       uses: actions/checkout@v4
       with:
-        force-depth: 0
+        fetch-depth: 0
     - name: "Docker login"
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
@@ -25,3 +25,9 @@ jobs:
         echo "Inicio docker login"
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         echo "Fin docker login"
+    - name: "Docker build image"
+      run: |
+        docker build -t wechavez14/graphql-actions:0.0.2 .
+    - name: "Docker build image"
+      run: |
+        docker push wechavez14/graphql-actions:0.0.2
